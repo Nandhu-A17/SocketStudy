@@ -20,7 +20,7 @@ To perform a study on Socket Programming
 •	The server listens for incoming connections from clients, while clients initiate connections to the server.
 •	Servers are passive, waiting for connection requests, and clients are active, initiating communication.
 
-3, TCP/IP Protocol:
+3. TCP/IP Protocol:
 
 •	Transmission Control Protocol (TCP) and Internet Protocol (IP) are the foundational protocols for socket programming.
 •	TCP provides reliable, connection-oriented communication, ensuring data integrity and order.
@@ -53,6 +53,45 @@ Socket programming finds applications in various domains, including web developm
 4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
 
+#Program:
+
+client:
+```
+import socket
+from datetime import datetime
+
+s = socket.socket()
+s.bind(('localhost', 8002))
+s.listen(5)
+
+c, addr = s.accept()
+print("Client Address:", addr)
+
+now = datetime.now()
+c.send(now.strftime("Date: %d/%m/%Y and Time: %H:%M:%S").encode())
+
+ack = c.recv(1024).decode()
+if ack:
+    print(ack)
+
+c.close()
+```
+server:
+```
+import socket
+
+s = socket.socket()
+s.connect(('localhost', 8002))
+
+print(s.getsockname())
+print(s.recv(1024).decode())
+
+s.send("Acknowledgement received from the client".encode())
+```
+#Output:
+
+<img width="932" height="152" alt="image" src="https://github.com/user-attachments/assets/9e82941e-ebb7-4df3-9bd6-a60ae60fdd14" />
+<img width="1214" height="254" alt="image" src="https://github.com/user-attachments/assets/a9b7842a-f43e-4155-8246-717fa8d20d9d" />
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
